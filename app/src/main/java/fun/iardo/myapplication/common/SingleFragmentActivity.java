@@ -7,15 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import fun.iardo.myapplication.R;
 
 
 public abstract class SingleFragmentActivity extends AppCompatActivity
-        implements SwipeRefreshLayout.OnRefreshListener, RefreshOwner, OnBackPressedListener {
+        implements OnBackPressedListener {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     protected abstract Fragment getFragment();
 
 
@@ -24,8 +22,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.ac_swipe_container);
-        mSwipeRefreshLayout = findViewById(R.id.refresher);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         if (savedInstanceState == null) {
             changeFragment(getFragment());
@@ -64,19 +60,4 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
         }
     }
 
-
-    @Override
-    public void onRefresh() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (fragment instanceof Refreshable) {
-            ((Refreshable) fragment).onRefreshData();
-        } else {
-            setRefreshState(false);
-        }
-    }
-
-    @Override
-    public void setRefreshState(boolean refreshing) {
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(refreshing));
-    }
 }

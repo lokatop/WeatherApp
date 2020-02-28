@@ -26,7 +26,8 @@ public class ApiService {
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
                     .connectTimeout(10000, TimeUnit.SECONDS)
                     .readTimeout(10000,TimeUnit.SECONDS)
-                    .addInterceptor(logging);
+                    .addInterceptor(new ApiKeyInterceptor());
+            if (!BuildConfig.BUILD_TYPE.contains("release")){builder.addInterceptor(logging);}
 
             sClient = builder.build();
         }

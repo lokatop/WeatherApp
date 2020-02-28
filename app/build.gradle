@@ -11,7 +11,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        buildConfigField "String", "API_URL", '"http://api.accuweather.com/"'
+        buildConfigField "String", "API_URL", '"http://dataservice.accuweather.com/"'
+        buildConfigField "String", "API_KEY", '"r8IZADPHjMEcZKdLfFvrLOVdjws2BGuD"'
     }
     buildTypes {
         release {
