@@ -9,13 +9,17 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+import java.util.Objects;
 
 import fun.iardo.myapplication.R;
 import fun.iardo.myapplication.common.PresenterFragment;
@@ -34,6 +38,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     private TextView tv_country,tv_city,tv_tempNow;
     private AutoCompleteTextView tv_autoCompleteSearchText;
+    private ImageView iv_weather_icon;
 
     public static final String TEST_CITY_KEY = "335315";
 
@@ -62,6 +67,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_country = view.findViewById(R.id.tv_country);
         tv_tempNow = view.findViewById(R.id.tv_tempNow);
         tv_autoCompleteSearchText = view.findViewById(R.id.tv_autoCompleteSearchText);
+        iv_weather_icon = view.findViewById(R.id.iv_weather_icon);
     }
 
     @Override
@@ -119,5 +125,11 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_city.setText(model.getLocalizedName());
         tv_country.setText(model.getCountry().getLocalizedName());
         tv_tempNow.setText(condition.get(0).getTemperature().getMetric().getValue() +" "+ condition.get(0).getTemperature().getMetric().getUnit());
+
+        Glide.with(Objects.requireNonNull(this.getActivity()))
+                .load("http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/" +
+                        String.format("%02d", condition.get(0).getWeatherIcon()) +
+                        "-s" + ".png")
+                .into(iv_weather_icon);
     }
 }
