@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import fun.iardo.myapplication.R;
 import fun.iardo.myapplication.common.PresenterFragment;
 import fun.iardo.myapplication.common.Refreshable;
 import fun.iardo.myapplication.data.model.CurrentCondition;
+import fun.iardo.myapplication.data.model.SearchLocationModel;
 
 public class SearchFragment extends PresenterFragment<SearchPresenter>
         implements Refreshable,SearchView {
@@ -25,8 +29,11 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
     private SearchPresenter mPresenter;
     private Button mButtonGetWeather;
     private TableLayout tl_data_about_weather;
+    private SearchAutoCompleteAdapter mAutoAdapter;
+    private SearchLocationModel mSearchLocationModel;
 
     private TextView tv_country,tv_city,tv_tempNow;
+    private AutoCompleteTextView tv_autoCompleteSearchText;
 
     public static final String TEST_CITY_KEY = "335315";
 
@@ -54,16 +61,27 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_city = view.findViewById(R.id.tv_city);
         tv_country = view.findViewById(R.id.tv_country);
         tv_tempNow = view.findViewById(R.id.tv_tempNow);
+        tv_autoCompleteSearchText = view.findViewById(R.id.tv_autoCompleteSearchText);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null){
-            getActivity().setTitle("Search City");
+            getActivity().setTitle("Weather");
         }
         mPresenter = new SearchPresenter(this);
-        mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(TEST_CITY_KEY));
+        mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
+        tv_autoCompleteSearchText.setThreshold(2);
+        mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
+        tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
+
+        tv_autoCompleteSearchText.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    mSearchLocationModel = (SearchLocationModel) parent.getAdapter().getItem(position);
+                    mPresenter.GetWeather(mSearchLocationModel);
+                    tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
+                });
     }
 
     @Override
@@ -73,7 +91,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void onRefreshData() {
-        mPresenter.GetWeather(TEST_CITY_KEY);
+        mPresenter.GetWeather(mSearchLocationModel);
     }
 
     @Override
@@ -97,9 +115,9 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
     }
 
     @Override
-    public void bindData(@NonNull List<CurrentCondition> condition) {
-        tv_city.setText("city");
-        tv_country.setText("country");
+    public void bindData(@NonNull List<CurrentCondition> condition,@NonNull SearchLocationModel model) {
+        tv_city.setText(model.getLocalizedName());
+        tv_country.setText(model.getCountry().getLocalizedName());
         tv_tempNow.setText(condition.get(0).getTemperature().getMetric().getValue() +" "+ condition.get(0).getTemperature().getMetric().getUnit());
     }
 }

@@ -89,7 +89,7 @@ public class SearchLocationModel {
         this.administrativeArea = administrativeArea;
     }
 
-    private class AdministrativeArea {
+    public class AdministrativeArea {
 
         @SerializedName("ID")
         @Expose
@@ -119,7 +119,7 @@ public class SearchLocationModel {
 
     }
 
-    private class Country {
+    public class Country {
 
         @SerializedName("ID")
         @Expose

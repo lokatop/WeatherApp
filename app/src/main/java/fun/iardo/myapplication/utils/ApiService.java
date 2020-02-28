@@ -26,19 +26,19 @@ public class ApiService {
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
                     .connectTimeout(10000, TimeUnit.SECONDS)
                     .readTimeout(10000,TimeUnit.SECONDS)
-                    .addInterceptor(new ApiKeyInterceptor());
-            if (!BuildConfig.BUILD_TYPE.contains("release")){builder.addInterceptor(logging);}
+                    //.addInterceptor(new ApiKeyInterceptor());
+                    .addInterceptor(logging);
 
             sClient = builder.build();
         }
         return sClient;
     }
 
-    private static Retrofit getRetrofit(){
+    private static Retrofit getRetrofit(String baseUrl){
         if (sGson == null){sGson = new Gson();}
         if (sRetrofit == null){
             sRetrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.API_URL)
+                    .baseUrl(baseUrl)
                     .client(getClient())
                     .addConverterFactory(GsonConverterFactory.create(sGson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -48,9 +48,9 @@ public class ApiService {
     }
 
 
-    public static IWeatherApi getApiService(){
+    public static IWeatherApi getApiService(String baseUrl){
         if (sApi == null){
-            sApi = getRetrofit().create(IWeatherApi.class);
+            sApi = getRetrofit(baseUrl).create(IWeatherApi.class);
         }
         return sApi;
     }

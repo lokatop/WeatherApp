@@ -11,9 +11,9 @@ import retrofit2.http.Query;
 
 public interface IWeatherApi {
     @GET("currentconditions/v1/{key}")
-    Observable<List<CurrentCondition>> getData(@Path("key") String cityKey);
+    Observable<List<CurrentCondition>> getData(@Path("key") String cityKey, @Query("apikey") String appId);
 
     @GET("locations/v1/cities/autocomplete")
-    Observable<List<SearchLocationModel>> getCities(@Query("q") String query);
+    Observable<List<SearchLocationModel>> getCities(@Query("apikey") String appId, @Query("q") String query);
 
 }
