@@ -22,6 +22,4 @@ public interface SearchView extends BaseView {
     void bindData(@NonNull CurrentCondition condition, @NonNull SearchLocationModel model);
     @OneExecution
     void setAdapterAutoText();
-
-
 }
