@@ -117,7 +117,6 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void showRefresh() {
-
     }
 
     @Override
