@@ -2,6 +2,7 @@ package fun.iardo.myapplication.ui.search;
 
 import fun.iardo.myapplication.BuildConfig;
 import fun.iardo.myapplication.common.BasePresenter;
+import fun.iardo.myapplication.data.model.CurrentCondition;
 import fun.iardo.myapplication.data.model.SearchLocationModel;
 import fun.iardo.myapplication.utils.ApiService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -11,37 +12,34 @@ import moxy.InjectViewState;
 @InjectViewState
 public class SearchPresenter extends BasePresenter<SearchView> {
 
-    private SearchView mView;
-
-    public SearchPresenter(SearchView view){
-        mView = view;
-    }
-
     public static final String API_URL = "https://dataservice.accuweather.com/";
     public static final String API_URL_IMAGE = "https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/";
     public static final String LANGUAGE = "Ru-ru";
 
+    public CurrentCondition currentCondition;
+
+
     public void GetWeatherData(SearchLocationModel searchLocationModel){
-        if (searchLocationModel != null){
+        if (currentCondition==null){
             mCompositeDisposable.add(ApiService
                     .getApiService(API_URL)
                     .getData(searchLocationModel.getKey(), BuildConfig.API_KEY, LANGUAGE)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(disposable -> mView.showRefresh())
-                    .doFinally(mView::hideRefresh)
+                    .doOnSubscribe(disposable -> getViewState().showRefresh())
+                    .doFinally(getViewState()::hideRefresh)
                     .subscribe(
                             response -> {
-                                mView.showData();
-                                mView.bindData(response.get(0),searchLocationModel);
+                                currentCondition = response.get(0);
+                                getViewState().showData();
+                                getViewState().bindData(response.get(0),searchLocationModel);
                             },
-                            throwable -> mView.showError()
+                            throwable -> getViewState().showError()
                     )
-
             );
+        }else {
+            getViewState().showData();
+            getViewState().bindData(currentCondition,searchLocationModel);
         }
-    }
-    public void GetWeather(){
-        getViewState().GetWeather();
     }
 }

@@ -41,7 +41,7 @@ public class SearchFragment extends PresenterFragment
     SearchPresenter mPresenter;
     @ProvidePresenter
     SearchPresenter providePresenter(){
-        return new SearchPresenter(this);
+        return new SearchPresenter();
     }
 
     private Button mButtonGetWeather;
@@ -55,9 +55,6 @@ public class SearchFragment extends PresenterFragment
     private ProgressBar progressBar;
 
     private String mWheatherText="", mTemperature="", mMetric="";
-
-    public static final String TEST_CITY_KEY = "335315";
-
     public SearchFragment() {
     }
 
@@ -98,6 +95,8 @@ public class SearchFragment extends PresenterFragment
         }
         //Кнопка будет реализована в будщем для вывода большей информации
         //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
+
+
         tv_autoCompleteSearchText.setThreshold(2);
         mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
         tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
@@ -106,10 +105,15 @@ public class SearchFragment extends PresenterFragment
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     mSearchLocationModel = (SearchLocationModel) parent.getAdapter().getItem(position);
-                    mPresenter.GetWeatherData(mSearchLocationModel);
+
+                    if (getPresenter().currentCondition == null){
+                        mPresenter.GetWeatherData(mSearchLocationModel);
+                    }
                     tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
                 });
+
     }
+
 
     @Override
     public void onDetach() {
@@ -118,7 +122,6 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void onRefreshData() {
-        mPresenter.GetWeatherData(mSearchLocationModel);
     }
 
     @Override
@@ -138,11 +141,11 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void showData() {
-        tl_data_about_weather.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void bindData(@NonNull CurrentCondition condition,@NonNull SearchLocationModel model) {
+        tl_data_about_weather.setVisibility(View.VISIBLE);
         tl_data_about_weather.setVisibility(View.VISIBLE);
         tv_city.setText(model.getLocalizedName());
         tv_country.setText(model.getCountry().getLocalizedName());
@@ -158,9 +161,5 @@ public class SearchFragment extends PresenterFragment
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
-    }
-
-    @Override
-    public void GetWeather() {
     }
 }
