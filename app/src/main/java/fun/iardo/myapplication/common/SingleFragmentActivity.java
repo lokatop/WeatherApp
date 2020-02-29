@@ -14,9 +14,6 @@ import fun.iardo.myapplication.R;
 public abstract class SingleFragmentActivity extends AppCompatActivity
         implements OnBackPressedListener {
 
-    protected abstract Fragment getFragment();
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +24,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
             changeFragment(getFragment());
         }
     }
+
+    protected abstract Fragment getFragment();
 
     public void changeFragment(Fragment fragment){
         boolean addToBackStack = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) != null;

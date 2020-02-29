@@ -1,9 +1,14 @@
 package fun.iardo.myapplication.common;
 
-public interface BaseView {
+import moxy.MvpView;
+import moxy.viewstate.strategy.alias.Skip;
+
+public interface BaseView extends MvpView {
+    @Skip
     void showRefresh();
-
+    @Skip
     void hideRefresh();
-
+    @Skip
     void showError();
+
 }

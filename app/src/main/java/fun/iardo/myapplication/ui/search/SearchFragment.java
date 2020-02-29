@@ -27,11 +27,20 @@ import fun.iardo.myapplication.common.PresenterFragment;
 import fun.iardo.myapplication.common.Refreshable;
 import fun.iardo.myapplication.data.model.CurrentCondition;
 import fun.iardo.myapplication.data.model.SearchLocationModel;
+import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 
-public class SearchFragment extends PresenterFragment<SearchPresenter>
+public class SearchFragment extends PresenterFragment
         implements Refreshable,SearchView {
     private View mErrorView;
-    private SearchPresenter mPresenter;
+
+    @InjectPresenter
+    SearchPresenter mPresenter;
+    @ProvidePresenter
+    SearchPresenter providePresenter(){
+        return new SearchPresenter(this);
+    }
+
     private Button mButtonGetWeather;
     private TableLayout tl_data_about_weather;
     private SearchAutoCompleteAdapter mAutoAdapter;
@@ -84,7 +93,6 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         if (getActivity() != null){
             getActivity().setTitle("Weather");
         }
-        mPresenter = new SearchPresenter(this);
         //Кнопка будет реализована в будщем для вывода большей информации
         //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
         tv_autoCompleteSearchText.setThreshold(2);
@@ -127,7 +135,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void showData() {
-        //tl_data_about_weather.setVisibility(View.VISIBLE);
+        tl_data_about_weather.setVisibility(View.VISIBLE);
     }
 
     @Override

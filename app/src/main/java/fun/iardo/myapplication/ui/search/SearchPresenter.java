@@ -1,18 +1,15 @@
 package fun.iardo.myapplication.ui.search;
 
-import android.widget.Filter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import fun.iardo.myapplication.BuildConfig;
 import fun.iardo.myapplication.common.BasePresenter;
 import fun.iardo.myapplication.data.model.SearchLocationModel;
 import fun.iardo.myapplication.utils.ApiService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import moxy.InjectViewState;
 
-public class SearchPresenter extends BasePresenter {
+@InjectViewState
+public class SearchPresenter extends BasePresenter<SearchView> {
 
     private SearchView mView;
 
@@ -34,8 +31,8 @@ public class SearchPresenter extends BasePresenter {
                     .doFinally(mView::hideRefresh)
                     .subscribe(
                             response -> {
-                                mView.showData();
                                 mView.bindData(response.get(0),searchLocationModel);
+                                mView.showData();
                             },
                             throwable -> mView.showError()
                     )

@@ -53,4 +53,10 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
 
     implementation 'com.github.bumptech.glide:glide:4.2.0'
+
+    //moxy
+    annotationProcessor 'com.github.moxy-community:moxy-compiler:2.1.1'
+    implementation 'com.github.moxy-community:moxy-android:2.1.1'
+    implementation 'com.github.moxy-community:moxy-app-compat:2.1.1'
+
 }
