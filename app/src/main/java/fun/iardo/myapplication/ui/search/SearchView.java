@@ -1,6 +1,8 @@
 package fun.iardo.myapplication.ui.search;
 
 
+import android.widget.Filter;
+
 import androidx.annotation.NonNull;
 
 
@@ -15,4 +17,6 @@ public interface SearchView extends BaseView {
     void showData();
     @AddToEndSingle
     void bindData(@NonNull CurrentCondition condition, @NonNull SearchLocationModel model);
+    @Skip
+    void GetWeather();
 }

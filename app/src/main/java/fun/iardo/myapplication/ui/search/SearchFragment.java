@@ -9,6 +9,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -105,7 +106,7 @@ public class SearchFragment extends PresenterFragment
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     mSearchLocationModel = (SearchLocationModel) parent.getAdapter().getItem(position);
-                    mPresenter.GetWeather(mSearchLocationModel);
+                    mPresenter.GetWeatherData(mSearchLocationModel);
                     tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
                 });
     }
@@ -117,7 +118,7 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void onRefreshData() {
-        mPresenter.GetWeather(mSearchLocationModel);
+        mPresenter.GetWeatherData(mSearchLocationModel);
     }
 
     @Override
@@ -157,5 +158,9 @@ public class SearchFragment extends PresenterFragment
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
+    }
+
+    @Override
+    public void GetWeather() {
     }
 }

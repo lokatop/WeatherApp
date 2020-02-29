@@ -21,7 +21,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     public static final String API_URL_IMAGE = "https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/";
     public static final String LANGUAGE = "Ru-ru";
 
-    public void GetWeather(SearchLocationModel searchLocationModel){
+    public void GetWeatherData(SearchLocationModel searchLocationModel){
         if (searchLocationModel != null){
             mCompositeDisposable.add(ApiService
                     .getApiService(API_URL)
@@ -40,7 +40,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
             );
         }
-
     }
-
+    public void GetWeather(){
+        getViewState().GetWeather();
+    }
 }
