@@ -17,7 +17,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
         mView = view;
     }
 
-    public static final String API_URL = "http://dataservice.accuweather.com/";
+    public static final String API_URL = "https://dataservice.accuweather.com/";
+    public static final String API_URL_IMAGE = "https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/";
     public static final String LANGUAGE = "Ru-ru";
 
     public void GetWeather(SearchLocationModel searchLocationModel){
@@ -31,8 +32,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                     .doFinally(mView::hideRefresh)
                     .subscribe(
                             response -> {
-                                mView.bindData(response.get(0),searchLocationModel);
                                 mView.showData();
+                                mView.bindData(response.get(0),searchLocationModel);
                             },
                             throwable -> mView.showError()
                     )

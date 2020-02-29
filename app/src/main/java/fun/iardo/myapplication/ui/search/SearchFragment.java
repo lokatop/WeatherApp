@@ -30,6 +30,8 @@ import fun.iardo.myapplication.data.model.SearchLocationModel;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
+import static fun.iardo.myapplication.ui.search.SearchPresenter.API_URL_IMAGE;
+
 public class SearchFragment extends PresenterFragment
         implements Refreshable,SearchView {
     private View mErrorView;
@@ -151,7 +153,7 @@ public class SearchFragment extends PresenterFragment
         tv_tempNow.setText(concatTemp);
 
         Glide.with(Objects.requireNonNull(this.getActivity()))
-                .load("http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/" +
+                .load(API_URL_IMAGE +
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
