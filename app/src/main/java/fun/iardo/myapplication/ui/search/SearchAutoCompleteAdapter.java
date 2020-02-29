@@ -54,6 +54,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
         }
         if (view != null){
             ((TextView)view.findViewById(R.id.tv_city_suggestion)).setText(mResultList.get(position).getLocalizedName());
+            ((TextView)view.findViewById(R.id.tv_country_suggestion)).setText(mResultList.get(position).getCountry().getLocalizedName());
         }
 
         return view;

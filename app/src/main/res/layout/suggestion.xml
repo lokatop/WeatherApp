@@ -8,4 +8,9 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:id="@+id/tv_city_suggestion"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/tv_country_suggestion"/>
 </LinearLayout>
