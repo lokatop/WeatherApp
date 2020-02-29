@@ -1,9 +1,11 @@
 package fun.iardo.myapplication.common;
 
-import androidx.fragment.app.Fragment;
 
-public abstract class PresenterFragment<P extends BasePresenter> extends Fragment {
-    protected abstract P getPresenter();
+import moxy.MvpAppCompatFragment;
+
+public abstract class PresenterFragment extends MvpAppCompatFragment {
+
+    protected abstract BasePresenter getPresenter();
 
     @Override
     public void onDetach() {

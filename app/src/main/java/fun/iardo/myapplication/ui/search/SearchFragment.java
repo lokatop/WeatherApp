@@ -9,6 +9,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -27,11 +28,22 @@ import fun.iardo.myapplication.common.PresenterFragment;
 import fun.iardo.myapplication.common.Refreshable;
 import fun.iardo.myapplication.data.model.CurrentCondition;
 import fun.iardo.myapplication.data.model.SearchLocationModel;
+import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 
-public class SearchFragment extends PresenterFragment<SearchPresenter>
+import static fun.iardo.myapplication.ui.search.SearchPresenter.API_URL_IMAGE;
+
+public class SearchFragment extends PresenterFragment
         implements Refreshable,SearchView {
     private View mErrorView;
-    private SearchPresenter mPresenter;
+
+    @InjectPresenter
+    SearchPresenter mPresenter;
+    @ProvidePresenter
+    SearchPresenter providePresenter(){
+        return new SearchPresenter();
+    }
+
     private Button mButtonGetWeather;
     private TableLayout tl_data_about_weather;
     private SearchAutoCompleteAdapter mAutoAdapter;
@@ -43,7 +55,6 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
     private ProgressBar progressBar;
 
     private String mWheatherText="", mTemperature="", mMetric="";
-
     public SearchFragment() {
     }
 
@@ -82,21 +93,18 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         if (getActivity() != null){
             getActivity().setTitle("Weather");
         }
-        mPresenter = new SearchPresenter(this);
         //Кнопка будет реализована в будщем для вывода большей информации
         //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
-        tv_autoCompleteSearchText.setThreshold(2);
-        mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
-        tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
-        tv_autoCompleteSearchText.setLoadingIndicator(progressBar);
-
+        getPresenter().setAdapterAutoText();
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     mSearchLocationModel = (SearchLocationModel) parent.getAdapter().getItem(position);
-                    mPresenter.GetWeather(mSearchLocationModel);
+
+                    mPresenter.GetWeatherData(mSearchLocationModel);
                     tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
                 });
-    }
+        }
+
 
     @Override
     public void onDetach() {
@@ -105,7 +113,6 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void onRefreshData() {
-        mPresenter.GetWeather(mSearchLocationModel);
     }
 
     @Override
@@ -130,7 +137,6 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void bindData(@NonNull CurrentCondition condition,@NonNull SearchLocationModel model) {
-        tl_data_about_weather.setVisibility(View.VISIBLE);
         tv_city.setText(model.getLocalizedName());
         tv_country.setText(model.getCountry().getLocalizedName());
 
@@ -141,9 +147,17 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_tempNow.setText(concatTemp);
 
         Glide.with(Objects.requireNonNull(this.getActivity()))
-                .load("https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/" +
+                .load(API_URL_IMAGE +
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
+    }
+
+    @Override
+    public void setAdapterAutoText() {
+        tv_autoCompleteSearchText.setThreshold(2);
+        mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
+        tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
+        tv_autoCompleteSearchText.setLoadingIndicator(progressBar);
     }
 }

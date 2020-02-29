@@ -1,12 +1,14 @@
 package fun.iardo.myapplication.common;
 
+
 import io.reactivex.disposables.CompositeDisposable;
+import moxy.MvpPresenter;
 
-public abstract class BasePresenter {
+public abstract class BasePresenter<View extends BaseView> extends MvpPresenter<View> {
 
-    protected final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public void disposeAll() {
-        mCompositeDisposable.dispose();
+        mCompositeDisposable.clear();
     }
 }
