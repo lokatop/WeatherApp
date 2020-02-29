@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context=".ui.search.SearchActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/weather" />
-
     <AutoCompleteTextView
         android:id="@+id/tv_autoCompleteSearchText"
         android:layout_width="match_parent"
@@ -23,6 +17,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/weather" />
 
     <Button
         android:id="@+id/btn_get_weather"
