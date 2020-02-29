@@ -80,7 +80,8 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
             getActivity().setTitle("Weather");
         }
         mPresenter = new SearchPresenter(this);
-        mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
+        //Кнопка будет реализована в будщем для вывода большей информации
+        //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
         tv_autoCompleteSearchText.setThreshold(2);
         mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
         tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
