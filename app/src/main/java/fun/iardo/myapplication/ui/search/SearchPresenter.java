@@ -21,13 +21,13 @@ public class SearchPresenter extends BasePresenter {
     }
 
     public static final String API_URL = "http://dataservice.accuweather.com/";
-    //public static final String API_URL_CITY = "http://api.accuweather.com/";
+    public static final String LANGUAGE = "Ru-ru";
 
     public void GetWeather(SearchLocationModel searchLocationModel){
         if (searchLocationModel != null){
             mCompositeDisposable.add(ApiService
                     .getApiService(API_URL)
-                    .getData(searchLocationModel.getKey(), BuildConfig.API_KEY)
+                    .getData(searchLocationModel.getKey(), BuildConfig.API_KEY, LANGUAGE)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe(disposable -> mView.showRefresh())
@@ -35,7 +35,7 @@ public class SearchPresenter extends BasePresenter {
                     .subscribe(
                             response -> {
                                 mView.showData();
-                                mView.bindData(response,searchLocationModel);
+                                mView.bindData(response.get(0),searchLocationModel);
                             },
                             throwable -> mView.showError()
                     )

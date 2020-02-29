@@ -21,9 +21,11 @@
             android:id="@+id/tv_autoCompleteSearchText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Enter the name of the city"
             android:imeOptions="flagNoExtractUi|actionSearch"
             android:inputType="textCapSentences"
-            android:paddingRight="32dp" />
+            android:paddingRight="32dp"
+            android:textAlignment="center" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -37,9 +39,10 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_weather_icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:src="@drawable/weather"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,20 +55,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/iv_weather_icon">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/iv_weather_icon"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                tools:layout_editor_absoluteX="8dp" />
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -76,7 +67,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Country" />
+                android:text="Страна" />
 
             <TextView
                 android:id="@+id/tv_country"
@@ -96,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="City" />
+                android:text="Город" />
 
             <TextView
                 android:id="@+id/tv_city"
@@ -116,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Temperature" />
+                android:text="Температура" />
 
             <TextView
                 android:id="@+id/tv_tempNow"

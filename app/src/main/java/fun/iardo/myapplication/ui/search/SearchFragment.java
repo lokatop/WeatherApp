@@ -42,7 +42,12 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
     private ImageView iv_weather_icon;
     private ProgressBar progressBar;
 
+    private String mWheatherText="", mTemperature="", mMetric="";
+
     public static final String TEST_CITY_KEY = "335315";
+
+    public SearchFragment() {
+    }
 
     public static SearchFragment newInstance(){return new SearchFragment();}
 
@@ -126,15 +131,20 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
     }
 
     @Override
-    public void bindData(@NonNull List<CurrentCondition> condition,@NonNull SearchLocationModel model) {
+    public void bindData(@NonNull CurrentCondition condition,@NonNull SearchLocationModel model) {
         tl_data_about_weather.setVisibility(View.VISIBLE);
         tv_city.setText(model.getLocalizedName());
         tv_country.setText(model.getCountry().getLocalizedName());
-        tv_tempNow.setText(condition.get(0).getTemperature().getMetric().getValue() +" "+ condition.get(0).getTemperature().getMetric().getUnit());
+
+        mWheatherText = condition.getWeatherText();
+        mMetric = condition.getTemperature().getMetric().getUnit();
+        mTemperature = String.valueOf(condition.getTemperature().getMetric().getValue());
+        String concatTemp = mTemperature+mMetric+", "+mWheatherText;
+        tv_tempNow.setText(concatTemp);
 
         Glide.with(Objects.requireNonNull(this.getActivity()))
                 .load("http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/" +
-                        String.format("%02d", condition.get(0).getWeatherIcon()) +
+                        String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
     }

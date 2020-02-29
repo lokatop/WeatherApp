@@ -21,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static fun.iardo.myapplication.ui.search.SearchPresenter.API_URL;
+import static fun.iardo.myapplication.ui.search.SearchPresenter.LANGUAGE;
 
 public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable {
     private Context mContext;
@@ -54,7 +55,6 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
         }
         if (view != null){
             SearchLocationModel locationModel = mResultList.get(position);
-            //String concatModel = locationModel.getLocalizedName()+" - "+locationModel.getCountry().getLocalizedName();
             ((TextView)view.findViewById(R.id.tv_city_suggestion)).setText(locationModel.getLocalizedName());
             ((TextView)view.findViewById(R.id.tv_country_suggestion)).setText(locationModel.getCountry().getLocalizedName());
         }
@@ -73,7 +73,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
                     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
                     mCompositeDisposable.add(ApiService
                             .getApiService(API_URL)
-                            .getCities( BuildConfig.API_KEY,charSequence.toString())
+                            .getCities( BuildConfig.API_KEY,charSequence.toString(),LANGUAGE)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
