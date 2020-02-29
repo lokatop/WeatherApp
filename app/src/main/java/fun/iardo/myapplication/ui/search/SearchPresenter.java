@@ -16,11 +16,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
     public static final String API_URL_IMAGE = "https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/";
     public static final String LANGUAGE = "Ru-ru";
 
-    public CurrentCondition currentCondition;
-
 
     public void GetWeatherData(SearchLocationModel searchLocationModel){
-        if (currentCondition==null){
             mCompositeDisposable.add(ApiService
                     .getApiService(API_URL)
                     .getData(searchLocationModel.getKey(), BuildConfig.API_KEY, LANGUAGE)
@@ -30,21 +27,15 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                     .doFinally(getViewState()::hideRefresh)
                     .subscribe(
                             response -> {
-                                currentCondition = response.get(0);
                                 getViewState().showData();
                                 getViewState().bindData(response.get(0),searchLocationModel);
                             },
                             throwable -> getViewState().showError()
                     )
             );
-        }else {
-            getViewState().showData();
-            getViewState().bindData(currentCondition,searchLocationModel);
-        }
     }
 
     public void setAdapterAutoText(){
-
         getViewState().setAdapterAutoText();
     }
 }

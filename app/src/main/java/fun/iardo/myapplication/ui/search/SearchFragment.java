@@ -113,6 +113,7 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void onRefreshData() {
+        mPresenter.GetWeatherData(mSearchLocationModel);
     }
 
     @Override
@@ -121,9 +122,7 @@ public class SearchFragment extends PresenterFragment
     }
 
     @Override
-    public void hideRefresh() {
-
-    }
+    public void hideRefresh() {}
 
     @Override
     public void showError() {
