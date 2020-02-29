@@ -20,7 +20,7 @@ public class SearchPresenter extends BasePresenter {
         mView = view;
     }
 
-    public static final String API_URL = "http://dataservice.accuweather.com/";
+    public static final String API_URL = "https://dataservice.accuweather.com/";
     public static final String LANGUAGE = "Ru-ru";
 
     public void GetWeather(SearchLocationModel searchLocationModel){
@@ -34,8 +34,8 @@ public class SearchPresenter extends BasePresenter {
                     .doFinally(mView::hideRefresh)
                     .subscribe(
                             response -> {
-                                mView.showData();
                                 mView.bindData(response.get(0),searchLocationModel);
+                                mView.showData();
                             },
                             throwable -> mView.showError()
                     )

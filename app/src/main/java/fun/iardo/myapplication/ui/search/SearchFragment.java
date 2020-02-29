@@ -44,8 +44,6 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     private String mWheatherText="", mTemperature="", mMetric="";
 
-    public static final String TEST_CITY_KEY = "335315";
-
     public SearchFragment() {
     }
 
@@ -127,7 +125,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void showData() {
-        //tl_data_about_weather.setVisibility(View.VISIBLE);
+        tl_data_about_weather.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -143,7 +141,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_tempNow.setText(concatTemp);
 
         Glide.with(Objects.requireNonNull(this.getActivity()))
-                .load("http://apidev.accuweather.com/developers/Media/Default/WeatherIcons/" +
+                .load("https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/" +
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
