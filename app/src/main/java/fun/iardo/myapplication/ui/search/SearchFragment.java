@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -37,8 +38,9 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
     private SearchLocationModel mSearchLocationModel;
 
     private TextView tv_country,tv_city,tv_tempNow;
-    private AutoCompleteTextView tv_autoCompleteSearchText;
+    private DelayAutoCompleteTextView tv_autoCompleteSearchText;
     private ImageView iv_weather_icon;
+    private ProgressBar progressBar;
 
     public static final String TEST_CITY_KEY = "335315";
 
@@ -68,6 +70,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_tempNow = view.findViewById(R.id.tv_tempNow);
         tv_autoCompleteSearchText = view.findViewById(R.id.tv_autoCompleteSearchText);
         iv_weather_icon = view.findViewById(R.id.iv_weather_icon);
+        progressBar = view.findViewById(R.id.progress_bar);
     }
 
     @Override
@@ -81,6 +84,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
         tv_autoCompleteSearchText.setThreshold(2);
         mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
         tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
+        tv_autoCompleteSearchText.setLoadingIndicator(progressBar);
 
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
@@ -112,7 +116,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void showError() {
-
+        tl_data_about_weather.setVisibility(View.GONE);
     }
 
     @Override
@@ -122,6 +126,7 @@ public class SearchFragment extends PresenterFragment<SearchPresenter>
 
     @Override
     public void bindData(@NonNull List<CurrentCondition> condition,@NonNull SearchLocationModel model) {
+        tl_data_about_weather.setVisibility(View.VISIBLE);
         tv_city.setText(model.getLocalizedName());
         tv_country.setText(model.getCountry().getLocalizedName());
         tv_tempNow.setText(condition.get(0).getTemperature().getMetric().getValue() +" "+ condition.get(0).getTemperature().getMetric().getUnit());
