@@ -95,24 +95,17 @@ public class SearchFragment extends PresenterFragment
         }
         //Кнопка будет реализована в будщем для вывода большей информации
         //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
-
-
         tv_autoCompleteSearchText.setThreshold(2);
-        mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
-        tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
+        getPresenter().setAdapterAutoText();
         tv_autoCompleteSearchText.setLoadingIndicator(progressBar);
-
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     mSearchLocationModel = (SearchLocationModel) parent.getAdapter().getItem(position);
 
-                    if (getPresenter().currentCondition == null){
-                        mPresenter.GetWeatherData(mSearchLocationModel);
-                    }
+                    mPresenter.GetWeatherData(mSearchLocationModel);
                     tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
                 });
-
-    }
+        }
 
 
     @Override
@@ -161,5 +154,11 @@ public class SearchFragment extends PresenterFragment
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
+    }
+
+    @Override
+    public void setAdapterAutoText() {
+        mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
+        tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
     }
 }

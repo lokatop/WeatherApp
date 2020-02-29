@@ -42,4 +42,9 @@ public class SearchPresenter extends BasePresenter<SearchView> {
             getViewState().bindData(currentCondition,searchLocationModel);
         }
     }
+
+    public void setAdapterAutoText(){
+
+        getViewState().setAdapterAutoText();
+    }
 }
