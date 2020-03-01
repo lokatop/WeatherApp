@@ -1,6 +1,7 @@
 package fun.iardo.myapplication.ui.search;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,6 +120,7 @@ public class SearchFragment extends PresenterFragment
         searchLocationModel.setRank(10);
         searchLocationModel.setType("City");
         searchLocationModel.setVersion(1);
+        //Кнопка будет реализована в будщем для вывода большей информации
 
         //Кнопка
         mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeatherData(searchLocationModel));
@@ -176,11 +178,22 @@ public class SearchFragment extends PresenterFragment
         String concatTemp = mTemperature+mMetric+", "+mWheatherText;
         tv_tempNow.setText(concatTemp);
 
+        /*
         Glide.with(Objects.requireNonNull(this.getActivity()))
                 .load(API_URL_IMAGE +
                         String.format("%02d", condition.getWeatherIcon()) +
                         "-s" + ".png")
                 .into(iv_weather_icon);
+                */
+
+        //Подумав, я глянул, всего фото около 40 штук. Есть ли смысл постоянно подгружать с сервера?
+        //И поэтому просто скачал все и положил в Assets(Весят же они оочень мало(меньше полумегабайта)
+        // + не надо фотки кэшировать или загружать, чтобы показать пользователю.
+        Glide.with(Objects.requireNonNull(this.getActivity()))
+                .load("file:///android_asset/weatherPhoto/"+String.format("%02d", condition.getWeatherIcon()) +
+                        "-s" + ".png")
+                .into(iv_weather_icon);
+
     }
 
     @Override

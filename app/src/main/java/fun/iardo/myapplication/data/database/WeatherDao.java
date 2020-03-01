@@ -36,8 +36,8 @@ public interface WeatherDao {
     void insertAdminAria(AdministrativeArea area);
 
 
-    @Query("select * from CurrentCondition")
-    List<CurrentCondition> getCurrentConditions();
+    @Query("select * from CurrentCondition where id=:cityId")
+    List<CurrentCondition> getCurrentConditions(int cityId);
     @Query("select * from CurrentCondition where id=:cityId")
     CurrentCondition getCurrentCondition(int cityId);
     @Query("select * from Temperature where condition_id=:conditionId")

@@ -8,8 +8,6 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 @Entity
 public class CurrentCondition {
 
@@ -19,12 +17,13 @@ public class CurrentCondition {
 
     @ColumnInfo(name = "LocalObservationDateTime")
     @SerializedName("LocalObservationDateTime")
-    @Expose
     private String localObservationDateTime;
+
+    //@ColumnInfo(name = "city_Key")
+    //private int mCiryKey;
 
     @ColumnInfo(name = "EpochTime")
     @SerializedName("EpochTime")
-    @Expose
     private int epochTime;
     //Однако по идее можно и long ставить, потому что ограничение до 2 147 483 648, а там уже 1.5млрд
 
@@ -61,6 +60,14 @@ public class CurrentCondition {
     @ColumnInfo(name = "Link")
     @SerializedName("Link")
     private String link;
+
+   //public int getCiryKey() {
+   //    return mCiryKey;
+   //}
+
+   //public void setCiryKey(int mCiryKey) {
+   //    this.mCiryKey = mCiryKey;
+   //}
 
     public int getId() {
         return mId;

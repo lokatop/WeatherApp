@@ -47,18 +47,13 @@ public class Storage {
 
     public List<CurrentCondition> getConditions(int idKey){
 
-        List<CurrentCondition> conditions = mWeatherDao.getCurrentConditions();
-        CurrentCondition condition = new CurrentCondition();
+        List<CurrentCondition> conditions = mWeatherDao.getCurrentConditions(idKey);
         Temperature temperature = mWeatherDao.getTemperature(idKey);
         Metric metric = mWeatherDao.getMetric(idKey);
         Imperial imperial = mWeatherDao.getImperial(idKey);
-
         temperature.setImperial(imperial);
         temperature.setMetric(metric);
-
-        condition.setTemperature(temperature);
-        conditions.set(0,condition);
-
+        conditions.get(0).setTemperature(temperature);
         return conditions;
     }
 
