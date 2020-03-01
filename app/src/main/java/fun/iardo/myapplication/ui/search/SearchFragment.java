@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -105,7 +106,7 @@ public class SearchFragment extends PresenterFragment
             getActivity().setTitle("Weather");
         }
         //Кнопка
-        //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeatherData(searchLocationModel));
+        mButtonGetWeather.setOnClickListener(v -> Toast.makeText(getContext(), "Автор: Доценко Илья Владимирович \n email: dots20101@gmail.com", Toast.LENGTH_LONG).show());
         //
 
         tv_autoCompleteSearchText.setThreshold(2);

@@ -26,6 +26,7 @@
             android:inputType="textCapSentences"
             android:paddingEnd="32dp"
             android:textAlignment="center"
+            android:textSize="24sp"
             tools:ignore="RtlSymmetry" />
 
         <ProgressBar
@@ -89,13 +90,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Temperature" />
+                        android:text="@string/Temperature"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tv_tempNow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp" />
+                        android:layout_marginStart="8dp"
+                        android:textSize="18sp" />
                 </TableRow>
 
                 <TableRow
@@ -108,14 +111,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Country" />
+                        android:text="@string/Country"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tv_country"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="" />
+                        android:text=""
+                        android:textSize="18sp" />
                 </TableRow>
 
                 <TableRow
@@ -128,12 +133,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/City" />
+                        android:text="@string/City"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tv_city"
                         android:layout_marginStart="8dp"
-                        android:text="" />
+                        android:text=""
+                        android:textSize="18sp" />
                 </TableRow>
 
             </TableLayout>
