@@ -1,53 +1,74 @@
 package fun.iardo.myapplication.data.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class CurrentCondition {
+@Entity
+public class CurrentCondition  implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int mId;
+
+    @ColumnInfo(name = "LocalObservationDateTime")
     @SerializedName("LocalObservationDateTime")
     @Expose
     private String localObservationDateTime;
 
+    @ColumnInfo(name = "EpochTime")
     @SerializedName("EpochTime")
     @Expose
     private int epochTime;
     //Однако по идее можно и long ставить, потому что ограничение до 2 147 483 648, а там уже 1.5млрд
 
+    @ColumnInfo(name = "WeatherText")
     @SerializedName("WeatherText")
-    @Expose
     private String weatherText;
 
+    @ColumnInfo(name = "WeatherIcon")
     @SerializedName("WeatherIcon")
-    @Expose
     private int weatherIcon;
 
+    @ColumnInfo(name = "HasPrecipitation")
     @SerializedName("HasPrecipitation")
-    @Expose
     private boolean hasPrecipitation;
 
 
+    @ColumnInfo(name = "PrecipitationType")
     @SerializedName("PrecipitationType")
-    @Expose
     private String precipitationType;
 
+    @ColumnInfo(name = "IsDayTime")
     @SerializedName("IsDayTime")
-    @Expose
     private boolean isDayTime;
 
 
     @SerializedName("Temperature")
-    @Expose
+    @Ignore
     private Temperature temperature;
 
+    @ColumnInfo(name = "MobileLink")
     @SerializedName("MobileLink")
-    @Expose
     private String mobileLink;
 
+    @ColumnInfo(name = "Link")
     @SerializedName("Link")
-    @Expose
     private String link;
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
+    }
 
     public String getLocalObservationDateTime() {
         return localObservationDateTime;
@@ -129,101 +150,5 @@ public class CurrentCondition {
         this.link = link;
     }
 
-    public class Temperature {
 
-        @SerializedName("Metric")
-        @Expose
-        private Metric metric;
-
-        @SerializedName("Imperial")
-        @Expose
-        private Imperial imperial;
-
-        public Metric getMetric() {
-            return metric;
-        }
-
-        public void setMetric(Metric metric) {
-            this.metric = metric;
-        }
-
-        public Imperial getImperial() {
-            return imperial;
-        }
-
-        public void setImperial(Imperial imperial) {
-            this.imperial = imperial;
-        }
-
-        public class Imperial {
-            @SerializedName("Value")
-            @Expose
-            private double value;
-            @SerializedName("Unit")
-            @Expose
-            private String unit;
-            @SerializedName("UnitType")
-            @Expose
-            private int unitType;
-
-            public double getValue() {
-                return value;
-            }
-
-            public void setValue(double value) {
-                this.value = value;
-            }
-
-            public String getUnit() {
-                return unit;
-            }
-
-            public void setUnit(String unit) {
-                this.unit = unit;
-            }
-
-            public int getUnitType() {
-                return unitType;
-            }
-
-            public void setUnitType(int unitType) {
-                this.unitType = unitType;
-            }
-        }
-        public class Metric {
-            @SerializedName("Value")
-            @Expose
-            private double value;
-            @SerializedName("Unit")
-            @Expose
-            private String unit;
-            @SerializedName("UnitType")
-            @Expose
-            private int unitType;
-
-            public double getValue() {
-                return value;
-            }
-
-            public void setValue(double value) {
-                this.value = value;
-            }
-
-            public String getUnit() {
-                return unit;
-            }
-
-            public void setUnit(String unit) {
-                this.unit = unit;
-            }
-
-            public int getUnitType() {
-                return unitType;
-            }
-
-            public void setUnitType(int unitType) {
-                this.unitType = unitType;
-            }
-        }
-    }
 }

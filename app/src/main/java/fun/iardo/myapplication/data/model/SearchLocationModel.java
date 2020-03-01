@@ -1,37 +1,58 @@
 package fun.iardo.myapplication.data.model;
 
-import com.google.gson.annotations.Expose;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
-public class SearchLocationModel {
+import java.io.Serializable;
 
+@Entity
+public class SearchLocationModel  implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int mId;
+
+    @ColumnInfo(name = "Version")
     @SerializedName("Version")
-    @Expose
     private int version;
 
+    @ColumnInfo(name = "Key")
     @SerializedName("Key")
-    @Expose
     private String key;
 
+    @ColumnInfo(name = "Type")
     @SerializedName("Type")
-    @Expose
     private String type;
 
+    @ColumnInfo(name = "Rank")
     @SerializedName("Rank")
-    @Expose
     private int Rank;
 
+    @ColumnInfo(name = "LocalizedName")
     @SerializedName("LocalizedName")
-    @Expose
     private String LocalizedName;
 
+    @ColumnInfo(name = "Country")
     @SerializedName("Country")
-    @Expose
+    @Ignore
     private Country country;
 
+    @ColumnInfo(name = "AdministrativeArea")
     @SerializedName("AdministrativeArea")
-    @Expose
+    @Ignore
     private AdministrativeArea administrativeArea;
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
+    }
 
     public int getVersion() {
         return version;
@@ -88,62 +109,4 @@ public class SearchLocationModel {
     public void setAdministrativeArea(AdministrativeArea administrativeArea) {
         this.administrativeArea = administrativeArea;
     }
-
-    public class AdministrativeArea {
-
-        @SerializedName("ID")
-        @Expose
-        private String id;
-
-        @SerializedName("LocalizedName")
-        @Expose
-        private String localizedName;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getLocalizedName() {
-            return localizedName;
-        }
-
-        public void setLocalizedName(String localizedName) {
-            this.localizedName = localizedName;
-        }
-
-
-
-    }
-
-    public class Country {
-
-        @SerializedName("ID")
-        @Expose
-        private String id;
-
-        @SerializedName("LocalizedName")
-        @Expose
-        private String localizedName;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getLocalizedName() {
-            return localizedName;
-        }
-
-        public void setLocalizedName(String localizedName) {
-            this.localizedName = localizedName;
-        }
-    }
-
 }
