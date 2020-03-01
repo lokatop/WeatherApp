@@ -71,8 +71,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
                 if (charSequence != null)
                 {
                     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-                    mCompositeDisposable.add(ApiService
-                            .getApiService(API_URL)
+                    mCompositeDisposable.add(ApiService.getApiService(API_URL)
                             .getCities( BuildConfig.API_KEY,charSequence.toString(),LANGUAGE)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())

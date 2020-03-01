@@ -3,6 +3,8 @@ package fun.iardo.myapplication.data.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,26 +15,37 @@ import java.io.Serializable;
         entity = SearchLocationModel.class,
         parentColumns = "id",
         childColumns = "search_location_id"
-))
+),indices = @Index("search_location_id"))
 public class AdministrativeArea  implements Serializable {
-
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id2")
+    @Expose
+    private int mId2;
     @SerializedName("ID")
     @Expose
     private String id;
 
     @ColumnInfo(name = "search_location_id")
-    private int mSearchLocationId;
+    private int searchLocationId;
 
     @SerializedName("LocalizedName")
     @Expose
     private String localizedName;
 
-    public int getmSearchLocationId() {
-        return mSearchLocationId;
+    public int getId2() {
+        return mId2;
     }
 
-    public void setmSearchLocationId(int mSearchLocationId) {
-        this.mSearchLocationId = mSearchLocationId;
+    public void setId2(int mId2) {
+        this.mId2 = mId2;
+    }
+
+    public int getSearchLocationId() {
+        return searchLocationId;
+    }
+
+    public void setSearchLocationId(int mSearchLocationId) {
+        this.searchLocationId = mSearchLocationId;
     }
 
     public String getId() {

@@ -2,6 +2,11 @@ package fun.iardo.myapplication.utils;
 
 import com.google.gson.Gson;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import fun.iardo.myapplication.BuildConfig;
@@ -13,6 +18,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiService {
+
+    public static final List<Class<?>> NETWORK_EXCEPTIONS = Arrays.asList(
+            UnknownHostException.class,
+            SocketTimeoutException.class,
+            ConnectException.class
+    );
+
     private static OkHttpClient sClient;
     private static Retrofit sRetrofit;
     private static Gson sGson;

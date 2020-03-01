@@ -35,16 +35,41 @@ public interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAdminAria(AdministrativeArea area);
 
+
     @Query("select * from CurrentCondition")
-    List<CurrentCondition> getCurrentCondition();
-    @Query("select * from Temperature where current_condition_id=:conditionId")
+    List<CurrentCondition> getCurrentConditions();
+    @Query("select * from CurrentCondition where id=:cityId")
+    CurrentCondition getCurrentCondition(int cityId);
+    @Query("select * from Temperature where condition_id=:conditionId")
     Temperature getTemperature(int conditionId);
     @Query("select * from Imperial where temperature_id = :temperatureId")
     Imperial getImperial(int temperatureId);
     @Query("select * from Metric where temperature_id = :temperatureId")
     Metric getMetric(int temperatureId);
 
-    @Query("select * from CurrentCondition")
-    List<CurrentCondition> getCurrnetCondition();
+
+    @Query("select * from SearchLocationModel")
+    List<SearchLocationModel> getLocations();
+    @Query("select * from Country where search_location_id=:conditionId")
+    Country getCountry(int conditionId);
+    @Query("select * from AdministrativeArea where search_location_id = :conditionId")
+    AdministrativeArea getArea(int conditionId);
+
+
+    @Query("delete from CurrentCondition")
+    void clearCurrentConditionTable();
+    @Query("delete from Temperature")
+    void clearTemperatureTable();
+    @Query("delete from Imperial")
+    void clearImperialTable();
+    @Query("delete from Metric")
+    void clearMetricTable();
+
+    @Query("delete from SearchLocationModel")
+    void clearLocationTable();
+    @Query("delete from Country")
+    void clearCountryTable();
+    @Query("delete from AdministrativeArea")
+    void clearAdministrativeAreaTable();
 
 }

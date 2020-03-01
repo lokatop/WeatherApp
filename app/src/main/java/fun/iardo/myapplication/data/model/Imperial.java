@@ -4,6 +4,7 @@ package fun.iardo.myapplication.data.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -15,11 +16,14 @@ import java.io.Serializable;
         entity = Temperature.class,
         parentColumns = "id",
         childColumns = "temperature_id"
-))
-public class Imperial  implements Serializable {
+),indices = @Index("temperature_id"))
+public class Imperial implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    @Expose
+    private int mId;
     @ColumnInfo(name = "temperature_id")
     private int mTemperatureId;
-
     @SerializedName("Value")
     @Expose
     private double value;
@@ -29,6 +33,14 @@ public class Imperial  implements Serializable {
     @SerializedName("UnitType")
     @Expose
     private int unitType;
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int mId) {
+        this.mId = mId;
+    }
 
     public double getValue() {
         return value;
@@ -54,11 +66,11 @@ public class Imperial  implements Serializable {
         this.unitType = unitType;
     }
 
-    public int getmTemperatureId() {
+    public int getTemperatureId() {
         return mTemperatureId;
     }
 
-    public void setmTemperatureId(int mTemperatureId) {
+    public void setTemperatureId(int mTemperatureId) {
         this.mTemperatureId = mTemperatureId;
     }
 }

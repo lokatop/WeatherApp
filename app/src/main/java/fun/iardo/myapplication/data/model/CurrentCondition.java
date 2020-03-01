@@ -11,9 +11,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 @Entity
-public class CurrentCondition  implements Serializable {
+public class CurrentCondition {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     @ColumnInfo(name = "id")
     private int mId;
 
@@ -62,11 +62,11 @@ public class CurrentCondition  implements Serializable {
     @SerializedName("Link")
     private String link;
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int mId) {
+    public void setId(int mId) {
         this.mId = mId;
     }
 

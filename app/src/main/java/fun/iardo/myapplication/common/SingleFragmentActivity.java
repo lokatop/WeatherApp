@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import fun.iardo.myapplication.AppDelegate;
 import fun.iardo.myapplication.R;
+import fun.iardo.myapplication.data.Storage;
 
 
 public abstract class SingleFragmentActivity extends AppCompatActivity
-        implements OnBackPressedListener {
+        implements Storage.StorageOwner,OnBackPressedListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +59,11 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public Storage obtainStorage() {
+        return ((AppDelegate) getApplicationContext()).getStorage();
     }
 
 }

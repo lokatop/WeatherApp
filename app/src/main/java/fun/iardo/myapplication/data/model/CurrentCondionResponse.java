@@ -8,13 +8,13 @@ import java.util.List;
 public class CurrentCondionResponse implements Serializable {
 
     @SerializedName("currentCondition")
-    private List<CurrentCondition> mCurrents;
+    private List<CurrentCondition> mConditions;
 
-    public List<CurrentCondition> getCurrents() {
-        return mCurrents;
+    public List<CurrentCondition> getConditions() {
+        return mConditions;
     }
 
-    public void setCurrents(List<CurrentCondition> mCurrents) {
-        this.mCurrents = mCurrents;
+    public void setConditions(List<CurrentCondition> conditions) {
+        mConditions = conditions;
     }
 }

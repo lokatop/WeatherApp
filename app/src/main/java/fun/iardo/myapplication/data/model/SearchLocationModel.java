@@ -46,11 +46,11 @@ public class SearchLocationModel  implements Serializable {
     @Ignore
     private AdministrativeArea administrativeArea;
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int mId) {
+    public void setId(int mId) {
         this.mId = mId;
     }
 

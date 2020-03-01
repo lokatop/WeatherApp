@@ -26,6 +26,9 @@ import java.util.Objects;
 import fun.iardo.myapplication.R;
 import fun.iardo.myapplication.common.PresenterFragment;
 import fun.iardo.myapplication.common.Refreshable;
+import fun.iardo.myapplication.data.Storage;
+import fun.iardo.myapplication.data.model.AdministrativeArea;
+import fun.iardo.myapplication.data.model.Country;
 import fun.iardo.myapplication.data.model.CurrentCondition;
 import fun.iardo.myapplication.data.model.SearchLocationModel;
 import moxy.presenter.InjectPresenter;
@@ -36,12 +39,13 @@ import static fun.iardo.myapplication.ui.search.SearchPresenter.API_URL_IMAGE;
 public class SearchFragment extends PresenterFragment
         implements Refreshable,SearchView {
     private View mErrorView;
+    private Storage mStorage;
 
     @InjectPresenter
     SearchPresenter mPresenter;
     @ProvidePresenter
     SearchPresenter providePresenter(){
-        return new SearchPresenter();
+        return new SearchPresenter(mStorage);
     }
 
     private Button mButtonGetWeather;
@@ -67,6 +71,7 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void onAttach(@NonNull Context context) {
+        mStorage = context instanceof Storage.StorageOwner ? ((Storage.StorageOwner) context).obtainStorage() : null;
         super.onAttach(context);
     }
     @Nullable
@@ -94,7 +99,31 @@ public class SearchFragment extends PresenterFragment
             getActivity().setTitle("Weather");
         }
         //Кнопка будет реализована в будщем для вывода большей информации
-        //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeather(mSearchLocationModel));
+        SearchLocationModel searchLocationModel = new SearchLocationModel();
+        Country country = new Country();
+        AdministrativeArea area = new AdministrativeArea();
+
+        country.setId("RU");
+        country.setLocalizedName("Россия");
+        country.setSearchLocationId(294021);
+        area.setId("MOW");
+        area.setLocalizedName("Москва");
+        area.setSearchLocationId(294021);
+
+        searchLocationModel.setAdministrativeArea(area);
+        searchLocationModel.setCountry(country);
+
+        searchLocationModel.setId(294021);
+        searchLocationModel.setKey("294021");
+        searchLocationModel.setLocalizedName("Москва");
+        searchLocationModel.setRank(10);
+        searchLocationModel.setType("City");
+        searchLocationModel.setVersion(1);
+
+        //Кнопка
+        mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeatherData(searchLocationModel));
+        //
+
         getPresenter().setAdapterAutoText();
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
@@ -108,6 +137,8 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void onDetach() {
+
+        mStorage = null;
         super.onDetach();
     }
 
