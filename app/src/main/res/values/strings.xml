@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">Твоя погода</string>
     <string name="Country">Страна</string>
     <string name="Temperature">Температура</string>
     <string name="City">Город</string>
     <string name="icon_weather">Icon weather</string>
     <string name="Enter_the_city_name">Введите название города</string>
     <string name="down_btn">Получить больше информации</string>
+    <string name="error">Что-то пошло не так. Пожалуйста повторите.</string>
 </resources>

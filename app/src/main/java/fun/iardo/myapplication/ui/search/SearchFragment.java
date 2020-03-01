@@ -94,6 +94,7 @@ public class SearchFragment extends PresenterFragment
         iv_weather_icon = view.findViewById(R.id.iv_weather_icon);
         progressBar = view.findViewById(R.id.progress_bar);
         progressBar2 = view.findViewById(R.id.progress_bar2);
+        mErrorView = view.findViewById(R.id.errorView);
 
     }
 
@@ -148,10 +149,13 @@ public class SearchFragment extends PresenterFragment
     @Override
     public void showError() {
         tl_data_about_weather.setVisibility(View.GONE);
+        mErrorView.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void showData() {
+        mErrorView.setVisibility(View.GONE);
         iv_weather_icon.setVisibility(View.VISIBLE);
         tl_data_about_weather.setVisibility(View.VISIBLE);
     }
