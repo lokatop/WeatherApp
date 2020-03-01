@@ -72,8 +72,10 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void onAttach(@NonNull Context context) {
-        mStorage = context instanceof Storage.StorageOwner ? ((Storage.StorageOwner) context).obtainStorage() : null;
         super.onAttach(context);
+        if (context instanceof Storage.StorageOwner) {
+            mStorage = ((Storage.StorageOwner) context).obtainStorage();
+        }
     }
     @Nullable
     @Override
@@ -91,6 +93,7 @@ public class SearchFragment extends PresenterFragment
         tv_autoCompleteSearchText = view.findViewById(R.id.tv_autoCompleteSearchText);
         iv_weather_icon = view.findViewById(R.id.iv_weather_icon);
         progressBar = view.findViewById(R.id.progress_bar);
+
     }
 
     @Override
@@ -99,34 +102,13 @@ public class SearchFragment extends PresenterFragment
         if (getActivity() != null){
             getActivity().setTitle("Weather");
         }
-        //Кнопка будет реализована в будщем для вывода большей информации
-        SearchLocationModel searchLocationModel = new SearchLocationModel();
-        Country country = new Country();
-        AdministrativeArea area = new AdministrativeArea();
-
-        country.setId("RU");
-        country.setLocalizedName("Россия");
-        country.setSearchLocationId(294021);
-        area.setId("MOW");
-        area.setLocalizedName("Москва");
-        area.setSearchLocationId(294021);
-
-        searchLocationModel.setAdministrativeArea(area);
-        searchLocationModel.setCountry(country);
-
-        searchLocationModel.setId(294021);
-        searchLocationModel.setKey("294021");
-        searchLocationModel.setLocalizedName("Москва");
-        searchLocationModel.setRank(10);
-        searchLocationModel.setType("City");
-        searchLocationModel.setVersion(1);
-        //Кнопка будет реализована в будщем для вывода большей информации
-
         //Кнопка
-        mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeatherData(searchLocationModel));
+        //mButtonGetWeather.setOnClickListener(v -> mPresenter.GetWeatherData(searchLocationModel));
         //
 
-        getPresenter().setAdapterAutoText();
+        tv_autoCompleteSearchText.setThreshold(2);
+        tv_autoCompleteSearchText.setLoadingIndicator(progressBar);
+        mPresenter.setAdapterAutoText();
         tv_autoCompleteSearchText.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     mSearchLocationModel = (SearchLocationModel) parent.getAdapter().getItem(position);
@@ -134,6 +116,8 @@ public class SearchFragment extends PresenterFragment
                     mPresenter.GetWeatherData(mSearchLocationModel);
                     tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
                 });
+
+        showData();
         }
 
 
@@ -198,9 +182,7 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void setAdapterAutoText() {
-        tv_autoCompleteSearchText.setThreshold(2);
-        mAutoAdapter = new SearchAutoCompleteAdapter(getContext());
+        mAutoAdapter = new SearchAutoCompleteAdapter(getContext(),mStorage);
         tv_autoCompleteSearchText.setAdapter(mAutoAdapter);
-        tv_autoCompleteSearchText.setLoadingIndicator(progressBar);
     }
 }

@@ -15,6 +15,6 @@ public interface IWeatherApi {
     Single<List<CurrentCondition>> getData(@Path("key") String cityKey, @Query("apikey") String appId, @Query("language") String language);
 
     @GET("locations/v1/cities/autocomplete")
-    Observable<List<SearchLocationModel>> getCities(@Query("apikey") String appId, @Query("q") String query, @Query("language") String language);
+    Single<List<SearchLocationModel>> getCities(@Query("apikey") String appId, @Query("q") String query, @Query("language") String language);
 
 }

@@ -9,10 +9,13 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 
 import fun.iardo.myapplication.data.database.WeatherDao;
+import fun.iardo.myapplication.data.model.AdministrativeArea;
+import fun.iardo.myapplication.data.model.Country;
 import fun.iardo.myapplication.data.model.CurrentCondionResponse;
 import fun.iardo.myapplication.data.model.CurrentCondition;
 import fun.iardo.myapplication.data.model.Imperial;
 import fun.iardo.myapplication.data.model.Metric;
+import fun.iardo.myapplication.data.model.SearchLocationModel;
 import fun.iardo.myapplication.data.model.Temperature;
 import io.reactivex.Single;
 
@@ -57,8 +60,42 @@ public class Storage {
         return conditions;
     }
 
+    public void insertLocationModel(SearchLocationModel locationModel){
+        
+        int key = Integer.valueOf(locationModel.getKey());
+        Country country = locationModel.getCountry();
+        AdministrativeArea area = locationModel.getAdministrativeArea();
+
+        //AccuWeather выдает наш ключик в String, поэтому переводим тут и добавляем в id
+        country.setSearchLocationId(key);
+        area.setSearchLocationId(key);
+        locationModel.setId(key);
+
+        mWeatherDao.insertLocationModel(locationModel);
+        mWeatherDao.insertCountry(country);
+        mWeatherDao.insertAdminAria(area);
+    }
+    
+    public List<SearchLocationModel> getLocationModels(){
+
+        List<SearchLocationModel> locationModels = mWeatherDao.getLocations();
+        for (SearchLocationModel location:locationModels) {
+            int key = location.getId();
+            Country country = mWeatherDao.getCountry(key);
+            AdministrativeArea area = mWeatherDao.getArea(key);
+            location.setCountry(country);
+            location.setAdministrativeArea(area);
+        }
+
+        return locationModels;
+    }
+
+    public void clearLocations(){
+        mWeatherDao.clearLocationTable();
+    }
+
+
     public interface StorageOwner {
         Storage obtainStorage();
     }
-
 }

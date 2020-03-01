@@ -31,6 +31,8 @@ public interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertLocationModels(List<SearchLocationModel> models);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertLocationModel(SearchLocationModel models);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCountry(Country country);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAdminAria(AdministrativeArea area);
@@ -50,10 +52,10 @@ public interface WeatherDao {
 
     @Query("select * from SearchLocationModel")
     List<SearchLocationModel> getLocations();
-    @Query("select * from Country where search_location_id=:conditionId")
-    Country getCountry(int conditionId);
-    @Query("select * from AdministrativeArea where search_location_id = :conditionId")
-    AdministrativeArea getArea(int conditionId);
+    @Query("select * from Country where search_location_id=:key")
+    Country getCountry(int key);
+    @Query("select * from AdministrativeArea where search_location_id = :key")
+    AdministrativeArea getArea(int key);
 
 
     @Query("delete from CurrentCondition")

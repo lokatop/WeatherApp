@@ -1,5 +1,7 @@
 package fun.iardo.myapplication.ui.search;
 
+import androidx.annotation.NonNull;
+
 import fun.iardo.myapplication.BuildConfig;
 import fun.iardo.myapplication.common.BasePresenter;
 import fun.iardo.myapplication.data.Storage;
@@ -23,13 +25,16 @@ public class SearchPresenter extends BasePresenter<SearchView> {
         this.mStorage = mStorage;
     }
 
-    public void GetWeatherData(SearchLocationModel searchLocationModel){
+    public void GetWeatherData(@NonNull SearchLocationModel searchLocationModel){
             int cityKey = Integer.valueOf(searchLocationModel.getKey());
 
             mCompositeDisposable.add(ApiService
                     .getApiService(API_URL)
                     .getData(searchLocationModel.getKey(), BuildConfig.API_KEY, LANGUAGE)
-                    .doOnSuccess(response->mStorage.insertConditions(response,cityKey))
+                    .doOnSuccess(response->{
+                        mStorage.insertConditions(response,cityKey);
+                        mStorage.insertLocationModel(searchLocationModel);
+                    })
                     .onErrorReturn(throwable -> ApiService.NETWORK_EXCEPTIONS.contains(throwable.getClass())?mStorage.getConditions(cityKey):null)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -44,8 +49,6 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                     )
             );
     }
-
-
 
     public void setAdapterAutoText(){
         getViewState().setAdapterAutoText();

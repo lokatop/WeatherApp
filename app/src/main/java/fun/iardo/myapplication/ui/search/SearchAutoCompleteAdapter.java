@@ -14,6 +14,7 @@ import java.util.List;
 
 import fun.iardo.myapplication.BuildConfig;
 import fun.iardo.myapplication.R;
+import fun.iardo.myapplication.data.Storage;
 import fun.iardo.myapplication.data.model.SearchLocationModel;
 import fun.iardo.myapplication.utils.ApiService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,10 +26,14 @@ import static fun.iardo.myapplication.ui.search.SearchPresenter.LANGUAGE;
 
 public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable {
     private Context mContext;
+    private Storage mStorage;
 
     private List<SearchLocationModel> mResultList = new ArrayList<>();
 
-    public SearchAutoCompleteAdapter(Context context){this.mContext = context;}
+    public SearchAutoCompleteAdapter(Context context,Storage mStorage){
+        this.mContext = context;
+        this.mStorage = mStorage;
+    }
 
     @Override
     public int getCount() {
@@ -54,6 +59,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
             }
         }
         if (view != null){
+
             SearchLocationModel locationModel = mResultList.get(position);
             ((TextView)view.findViewById(R.id.tv_city_suggestion)).setText(locationModel.getLocalizedName());
             ((TextView)view.findViewById(R.id.tv_country_suggestion)).setText(locationModel.getCountry().getLocalizedName());
@@ -73,6 +79,7 @@ public class SearchAutoCompleteAdapter extends BaseAdapter implements Filterable
                     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
                     mCompositeDisposable.add(ApiService.getApiService(API_URL)
                             .getCities( BuildConfig.API_KEY,charSequence.toString(),LANGUAGE)
+                            .onErrorReturn(throwable -> ApiService.NETWORK_EXCEPTIONS.contains(throwable.getClass())?mStorage.getLocationModels():null)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(

@@ -7,10 +7,9 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 
 @Entity
-public class SearchLocationModel  implements Serializable {
+public class SearchLocationModel{
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
