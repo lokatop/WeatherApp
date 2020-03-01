@@ -54,7 +54,7 @@
             <ImageView
                 android:id="@+id/iv_weather_icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/weather" />
 
@@ -69,7 +69,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Температура" />
+
+                    <TextView
+                        android:id="@+id/tv_tempNow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_get_weather"
+                        android:layout_marginLeft="8dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -89,7 +110,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -98,31 +120,11 @@
 
                     <TextView
                         android:id="@+id/tv_city"
-                        android:layout_width="163dp"
-                        android:layout_height="23dp"
                         android:layout_below="@id/btn_get_weather"
                         android:layout_marginLeft="8dp"
                         android:text="" />
                 </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Температура" />
-
-                    <TextView
-                        android:id="@+id/tv_tempNow"
-                        android:layout_width="163dp"
-                        android:layout_height="23dp"
-                        android:layout_below="@id/btn_get_weather"
-                        android:layout_marginLeft="8dp" />
-                </TableRow>
             </TableLayout>
         </LinearLayout>
     </ScrollView>
