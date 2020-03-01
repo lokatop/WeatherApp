@@ -21,7 +21,7 @@
             android:id="@+id/tv_autoCompleteSearchText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter the name of the city"
+            android:hint="Введите название города"
             android:imeOptions="flagNoExtractUi|actionSearch"
             android:inputType="textCapSentences"
             android:paddingRight="32dp"
@@ -132,7 +132,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_light"
-        android:text="Get more info"
+        android:text="Получить больше информации"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
