@@ -42,8 +42,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                     .doFinally(getViewState()::hideRefresh)
                     .subscribe(
                             response -> {
-                                getViewState().showData();
                                 getViewState().bindData(response.get(0),searchLocationModel);
+                                getViewState().showData();
                             },
                             throwable -> getViewState().showError()
                     )

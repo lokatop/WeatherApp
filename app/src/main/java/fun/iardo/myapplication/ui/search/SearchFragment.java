@@ -57,7 +57,7 @@ public class SearchFragment extends PresenterFragment
     private TextView tv_country,tv_city,tv_tempNow;
     private DelayAutoCompleteTextView tv_autoCompleteSearchText;
     private ImageView iv_weather_icon;
-    private ProgressBar progressBar;
+    private ProgressBar progressBar, progressBar2;
 
     private String mWheatherText="", mTemperature="", mMetric="";
     public SearchFragment() {
@@ -93,6 +93,7 @@ public class SearchFragment extends PresenterFragment
         tv_autoCompleteSearchText = view.findViewById(R.id.tv_autoCompleteSearchText);
         iv_weather_icon = view.findViewById(R.id.iv_weather_icon);
         progressBar = view.findViewById(R.id.progress_bar);
+        progressBar2 = view.findViewById(R.id.progress_bar2);
 
     }
 
@@ -135,11 +136,14 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void showRefresh() {
-
+        iv_weather_icon.setVisibility(View.GONE);
+        progressBar2.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideRefresh() {}
+    public void hideRefresh() {
+        progressBar2.setVisibility(View.GONE);
+    }
 
     @Override
     public void showError() {
@@ -148,6 +152,7 @@ public class SearchFragment extends PresenterFragment
 
     @Override
     public void showData() {
+        iv_weather_icon.setVisibility(View.VISIBLE);
         tl_data_about_weather.setVisibility(View.VISIBLE);
     }
 
