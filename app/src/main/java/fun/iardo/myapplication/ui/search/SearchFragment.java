@@ -117,7 +117,7 @@ public class SearchFragment extends PresenterFragment
                     tv_autoCompleteSearchText.setText(mSearchLocationModel.getLocalizedName());
                 });
 
-        showData();
+        //showData();
         }
 
 
