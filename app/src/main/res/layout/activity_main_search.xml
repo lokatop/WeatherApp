@@ -53,6 +53,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@drawable/separator"
+            android:dividerPadding="16dp"
+            android:showDividers="middle"
             android:orientation="vertical">
 
             <ImageView
@@ -77,6 +80,7 @@
                 android:id="@+id/tl_data_about_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:visibility="gone">
 
 
@@ -91,14 +95,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Temperature"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_tempNow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </TableRow>
 
                 <TableRow
@@ -109,10 +113,10 @@
                     android:gravity="center">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Country"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_country"
@@ -120,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text=""
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </TableRow>
 
                 <TableRow
@@ -134,13 +138,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/City"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text=""
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </TableRow>
 
             </TableLayout>
